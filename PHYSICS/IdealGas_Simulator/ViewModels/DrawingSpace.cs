@@ -49,7 +49,29 @@ namespace IdealGas_Simulator.ViewModels
         private async Task Async_Rendering(List<PixelParticle> Particle_List)
         {
             List<PixelParticle> Collector = Particle_List.ToList();
-            List<Task> Task_List = new List<Task>();
+            List<Task> Task_List = new List<Task>()
+            {
+                Task.Run(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                        WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 100, 1600, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                    }));
+                }),
+                Task.Run(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                        WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 100, 1600, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                    }));
+                }),
+                Task.Run(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                        WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 1400, 800, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                    }));
+                }),
+                Task.Run(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                        WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 1400, 800, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                    }));
+                }),
+            };
 
             foreach (PixelParticle item in Collector)
             {

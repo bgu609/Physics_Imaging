@@ -14,13 +14,6 @@ namespace IdealGas_Simulator.ViewModels
             set { drawing_space_object = value;  }
         }
 
-        private List<PixelParticle> pixel_particles;
-        public List<PixelParticle> Pixel_Particles
-        {
-            get => pixel_particles;
-            set { pixel_particles = value; }
-        }
-
 
 
         public MainViewModel()
@@ -31,22 +24,6 @@ namespace IdealGas_Simulator.ViewModels
             Simulation_Thread = new Thread(Simulation_Loop);
             Simulation_Thread.IsBackground = true;
             Simulation_Thread.Start();
-        }
-
-
-
-        private void Initialize_Particles(params PixelParticle[] particle)
-        {
-            Pixel_Particles.Clear();
-
-            List<PixelParticle> Emitter = new List<PixelParticle>();
-
-            foreach (PixelParticle item in particle)
-            {
-                Emitter.Add(item);
-            }
-
-            Pixel_Particles = Emitter;
         }
     }
 }
