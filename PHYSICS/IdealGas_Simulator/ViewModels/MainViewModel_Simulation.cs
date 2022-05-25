@@ -1,4 +1,5 @@
 ﻿using IdealGas_Simulator.Models;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -13,109 +14,57 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Simulation_Loop()
         {
-            int Render_Step = 0;
+            Random Random = new Random();
+
+            int last_x = 1200;
+            int last_y = 750;
+
+            Control_One_Particle(last_x, last_y);
 
             while (true)
             {
                 Thread.Sleep(16);
 
-                if (Render_Step % 6 == 0)
-                {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, }
-                        );
+                last_x += Random.Next(-10, 11);
+                last_y += Random.Next(-10, 11);
 
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
+                if (last_x < 0)
+                {
+                    last_x = 0;
                 }
-                else if (Render_Step % 6 == 1)
+                else if (last_x > 2400)
                 {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, },
-
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = 200, Y = 1000, }
-                        );
-
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
-                }
-                else if (Render_Step % 6 == 2)
-                {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, },
-
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = 400, Y = 1000, }
-                        );
-
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
-                }
-                else if (Render_Step % 6 == 3)
-                {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, },
-
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = 600, Y = 1000, }
-                        );
-
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
-                }
-                else if (Render_Step % 6 == 4)
-                {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, },
-
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = 800, Y = 1000, }
-                        );
-
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
-                }
-                else if (Render_Step % 6 == 5)
-                {
-                    Task.Run(() => {
-                        Initialize_Particles(
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 300, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 500, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 700, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 900, Y = 1000, },
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 5, X = 1100, Y = 1000, },
-
-                            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = 1000, Y = 1000, }
-                        );
-
-                        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-                    });
+                    last_x = 2400;
                 }
 
-                Render_Step = (Render_Step + 1) % 6;
+                if (last_y < 0)
+                {
+                    last_y = 0;
+                }
+                else if (last_y > 750)
+                {
+                    last_y = 750;
+                }
+
+                Control_One_Particle(last_x, last_y);
             }
+        }
+
+        private void Control_One_Particle(int x, int y)
+        {
+            Task.Run(() => {
+                Initialize_Particles(
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 10, X = 300, Y = 800, },
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 10, X = 500, Y = 900, },
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 10, X = 700, Y = 1000, },
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 10, X = 900, Y = 1100, },
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Radius = 10, X = 1100, Y = 1200, },
+
+                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = x, Y = y, }
+                );
+
+                Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
+            });
         }
     }
 }
