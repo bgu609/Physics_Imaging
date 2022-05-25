@@ -17,70 +17,51 @@ namespace IdealGas_Simulator.ViewModels
         {
             Random Random = new Random();
 
-            int last_x = 1200;
-            int last_y = 750;
+            int Last_X = 1200;
+            int Last_Y = 750;
 
-            Control_One_Particle(last_x, last_y);
+            Control_One_Particle(Last_X, Last_Y);
 
             while (true)
             {
                 Thread.Sleep(16);
 
-                int def_x = Random.Next(-10, 11);
-                int def_y = Random.Next(-10, 11);
+                double Move_Radius = Random.Next(-5, 6);
+                double Move_Radius_Decimal = Random.NextDouble();
+                int Move_Radius_Decimal_Sign = Random.Next(0, 2);
 
-                // 항상 움직이게
-                if (def_x == 0)
-                {
-                    int sign = Random.Next(0, 2);
+                double Move_Azimuth = Random.Next(0, 361);
+                double Move_Azimuth_Decimal = Random.NextDouble();
+                int Move_Azimuth_Decimal_Sign = Random.Next(0, 2);
 
-                    if (sign == 0)
-                    {
-                        def_x = 1;
-                    }
-                    else
-                    {
-                        def_x = -1;
-                    }
-                }
+                Move_Radius += (double)(Move_Radius_Decimal * ((Move_Radius_Decimal_Sign == 1) ? 1 : -1));
+                Move_Azimuth += (double)(Move_Azimuth_Decimal * ((Move_Azimuth_Decimal_Sign == 1) ? 1 : -1));
 
-                if (def_y == 0)
-                {
-                    int sign = Random.Next(0, 2);
+                // 일단 귀찮으니 사사오입 반올림 사용
+                Last_X += (int)Math.Round(Move_Radius * Math.Sin(Move_Azimuth));
+                Last_Y += (int)Math.Round(Move_Radius * Math.Cos(Move_Azimuth));
 
-                    if (sign == 0)
-                    {
-                        def_y = 1;
-                    }
-                    else
-                    {
-                        def_y = -1;
-                    }
-                }
-
-                last_x += def_x;
-                last_y += def_y;
 
                 // Boundary Condition
-                if (last_x < 810)
+                if (Last_X < 810)
                 {
-                    last_x = 810;
+                    Last_X = 810;
                 }
-                else if (last_x > 1590)
+                else if (Last_X > 1590)
                 {
-                    last_x = 1590;
-                }
-
-                if (last_y < 110)
-                {
-                    last_y = 110;
-                }
-                else if (last_y > 1390)
-                {
-                    last_y = 1390;
+                    Last_X = 1590;
                 }
 
-                Control_One_Particle(last_x, last_y);
+                if (Last_Y < 110)
+                {
+                    Last_Y = 110;
+                }
+                else if (Last_Y > 1390)
+                {
+                    Last_Y = 1390;
+                }
+
+                Control_One_Particle(Last_X, Last_Y);
             }
         }
 
