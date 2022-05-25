@@ -63,9 +63,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Particle.cs" />
+    <Compile Include="ViewModels\Basis\RelayCommand.cs" />
     <Compile Include="ViewModels\Basis\ViewModelBase.cs" />
     <Compile Include="ViewModels\DrawingSpace.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel_Commands.cs" />
+    <Compile Include="ViewModels\MainViewModel_Simulation.cs" />
+    <Compile Include="ViewModels\MainViewModel_Values.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>

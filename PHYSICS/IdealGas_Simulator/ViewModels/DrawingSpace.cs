@@ -1,5 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using IdealGas_Simulator.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,9 +14,6 @@ namespace IdealGas_Simulator.ViewModels
     public class DrawingSpace : Image
     {
         WriteableBitmap BitMap;
-        Thread Drawing_Thread;
-
-        int Async_Invoke_Period = 16;
 
 
 
@@ -21,38 +21,47 @@ namespace IdealGas_Simulator.ViewModels
         {
             BitMap = BitmapFactory.New(space_width, space_height);
             this.Source = BitMap;
-
-            Drawing_Thread = new Thread(Drawing_Loop);
-            Drawing_Thread.IsBackground = true;
-            Drawing_Thread.Start();
         }
 
 
 
-        private void Drawing_Loop()
+        public void Clear_Particles()
         {
-            while (true)
-            {
-                Thread.Sleep(Async_Invoke_Period);
-
-                Sample_Draw();
-            }
-        }
-
-        private void Sample_Draw()
-        {
-            Application.Current.Dispatcher.Invoke(() => {
-                WriteableBitmapExtensions.DrawLineAa(BitMap, 100, 510, 1500, 510, Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), 2);
-                WriteableBitmapExtensions.FillTriangle(BitMap, 100, 1000, 1500, 1000, 800, 1500, Color.FromArgb(0xFF, 0x00, 0x00, 0xFF));
-            });
-
-            Thread.Sleep(1000);
-
-            Application.Current.Dispatcher.Invoke(() => {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                 WriteableBitmapExtensions.Clear(BitMap, Color.FromArgb(0x00, 0x00, 0x00, 0x00));
-            });
+            }));
+        }
 
-            Thread.Sleep(1000);
+        public async void Now_Rendering_Particles(List<PixelParticle> Particle_List)
+        {
+            Application.Current.Dispatcher.Invoke(() => {
+                BitMap.Lock();
+            });
+            
+            Clear_Particles();
+            await Async_Rendering(Particle_List);
+
+            Application.Current.Dispatcher.Invoke(() => {
+                BitMap.Unlock();
+            });
+        }
+
+        private async Task Async_Rendering(List<PixelParticle> Particle_List)
+        {
+            List<PixelParticle> Collector = Particle_List.ToList();
+            List<Task> Task_List = new List<Task>();
+
+            foreach (PixelParticle item in Collector)
+            {
+                Task_List.Add(Task.Run(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+                    {
+                        WriteableBitmapExtensions.FillEllipse(BitMap, item.X, item.Y, item.X + item.Radius * 2, item.Y + item.Radius * 2, item.Color);
+                    }));
+                }));
+            }
+
+            await Task.WhenAll(Task_List);
         }
     }
 }
