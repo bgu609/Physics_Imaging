@@ -8,7 +8,7 @@
              d:DesignHeight="800" d:DesignWidth="1280">
     <Grid>
         <ContentControl>
-            <ContentPresenter Content="{Binding Drawing_Space}"/>
+            <ContentPresenter Content="{Binding Drawing_Space_Object}"/>
         </ContentControl>
     </Grid>
 </UserControl>

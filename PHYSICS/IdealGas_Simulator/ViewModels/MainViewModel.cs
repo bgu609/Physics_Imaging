@@ -16,8 +16,6 @@ namespace IdealGas_Simulator.ViewModels
         public MainViewModel()
         {
             Drawing_Space_Object = new DrawingSpace(5120, 3200);
-
-
         }
     }
 }
