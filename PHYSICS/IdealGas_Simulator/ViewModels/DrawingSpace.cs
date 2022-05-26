@@ -27,7 +27,7 @@ namespace IdealGas_Simulator.ViewModels
 
         public void Clear_Particles()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                 WriteableBitmapExtensions.Clear(BitMap);
             }));
         }
@@ -52,22 +52,22 @@ namespace IdealGas_Simulator.ViewModels
             List<Task> Task_List = new List<Task>() // Boundary 그리기
             {
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 100, 1600, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 100, 1600, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 1400, 800, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 1400, 800, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
@@ -76,7 +76,7 @@ namespace IdealGas_Simulator.ViewModels
             foreach (PixelParticle item in Collector) // Particles 그리기
             {
                 Task_List.Add(Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                     {
                         WriteableBitmapExtensions.FillEllipse(BitMap, item.X, item.Y, item.X + item.Radius * 2, item.Y + item.Radius * 2, item.Color);
                     }));
