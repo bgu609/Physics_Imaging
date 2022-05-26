@@ -9,6 +9,7 @@ namespace IdealGas_Simulator.ViewModels
     {
         public DispatcherTimer Drawing_Timer;
 
+        // WriteableBitmap : 결국 CPU를 이용하는 것이기 때문에 한계점이 있음
         private DrawingSpace drawing_space_object;
         public  DrawingSpace Drawing_Space_Object
         {
