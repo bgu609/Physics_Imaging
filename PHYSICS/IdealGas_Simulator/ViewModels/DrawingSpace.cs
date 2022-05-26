@@ -28,7 +28,7 @@ namespace IdealGas_Simulator.ViewModels
         public void Clear_Particles()
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
-                WriteableBitmapExtensions.Clear(BitMap, Color.FromArgb(0x00, 0x00, 0x00, 0x00));
+                WriteableBitmapExtensions.Clear(BitMap);
             }));
         }
 
@@ -49,7 +49,7 @@ namespace IdealGas_Simulator.ViewModels
         private async Task Async_Rendering(List<PixelParticle> Particle_List)
         {
             List<PixelParticle> Collector = Particle_List.ToList();
-            List<Task> Task_List = new List<Task>()
+            List<Task> Task_List = new List<Task>() // Boundary 그리기
             {
                 Task.Run(() => {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
@@ -73,7 +73,7 @@ namespace IdealGas_Simulator.ViewModels
                 }),
             };
 
-            foreach (PixelParticle item in Collector)
+            foreach (PixelParticle item in Collector) // Particles 그리기
             {
                 Task_List.Add(Task.Run(() => {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
