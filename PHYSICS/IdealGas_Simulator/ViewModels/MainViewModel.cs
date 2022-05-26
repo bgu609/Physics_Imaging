@@ -20,17 +20,34 @@ namespace IdealGas_Simulator.ViewModels
 
         public MainViewModel()
         {
-            Drawing_Space_Object = new DrawingSpace(2400, 1500);
+            Initialize_UI();
+
+            Initialize();
+        }
+
+
+
+        private void Initialize()
+        {
+            Number_of_Particles = 10000;
+            Pixel_Particles_Energy = 10;
+
+
 
             Drawing_Timer = new DispatcherTimer();
             Drawing_Timer.Interval = TimeSpan.FromMilliseconds(10);
             Drawing_Timer.Tick += Drawing_Timer_Tick;
-            
+
             Simulation_Thread = new Thread(Simulation_Loop);
             Simulation_Thread.IsBackground = true;
 
             Drawing_Timer.Start();
             Simulation_Thread.Start();
+        }
+
+        private void Initialize_UI()
+        {
+            Drawing_Space_Object = new DrawingSpace(2400, 1500);
         }
 
         private void Drawing_Timer_Tick(object sender, EventArgs e)

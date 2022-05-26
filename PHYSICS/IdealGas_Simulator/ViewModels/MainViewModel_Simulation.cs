@@ -14,34 +14,14 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Simulation_Loop()
         {
-            int Last_X = 1200;
-            int Last_Y = 750;
+            X_Boundary_Min = 805;
+            X_Boundary_Max = 1585;
+            Y_Boundary_Min = 105;
+            Y_Boundary_Max = 1385;
+            Z_Boundary_Min = -5;
+            Z_Boundary_Max = -5;
 
-            int Entropy = 10;
-            int Particles_Number = 20000;
-
-            PixelParticle[] Initial_Particles = new PixelParticle[Particles_Number];
-            for (int i = 0; i < Initial_Particles.Length; i++)
-            {
-                Initial_Particles[i] = new PixelParticle() {
-                    Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF),
-                    Seed = i,
-                    Entropy = Entropy,
-                    Dimension = 2,
-                    Radius = 5,
-                    X = Last_X,
-                    Y = Last_Y,
-                };
-            }
-
-            X_Boundary_Min = 810;
-            X_Boundary_Max = 1590;
-            Y_Boundary_Min = 110;
-            Y_Boundary_Max = 1390;
-            Z_Boundary_Min = 0;
-            Z_Boundary_Max = 0;
-
-            Task.Run(() => Initialize_Particles(Initial_Particles));
+            Task.Run(() => Initialize_Particles(Number_of_Particles, Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Pixel_Particles_Energy, 2, 5, 1200, 750));
 
             while (true)
             {
@@ -51,14 +31,29 @@ namespace IdealGas_Simulator.ViewModels
             }
         }
 
-        private void Initialize_Particles(params PixelParticle[] particle)
+        private void Initialize_Particles(int number, Color color, int energy, int dimension, int radius, int init_x, int init_y)
         {
             if (Pixel_Particles == null) Pixel_Particles = new List<PixelParticle>();
 
             Pixel_Particles.Clear();
 
+            PixelParticle[] Initial_Particles = new PixelParticle[number];
+            for (int i = 0; i < Initial_Particles.Length; i++)
+            {
+                Initial_Particles[i] = new PixelParticle()
+                {
+                    Color = color,
+                    Seed = i,
+                    Energy = energy,
+                    Dimension = dimension,
+                    Radius = radius,
+                    X = init_x,
+                    Y = init_y,
+                };
+            }
+
             List<PixelParticle> Emitter = new List<PixelParticle>();
-            foreach (PixelParticle item in particle)
+            foreach (PixelParticle item in Initial_Particles)
             {
                 Emitter.Add(item);
             }

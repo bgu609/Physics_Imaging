@@ -5,7 +5,7 @@ namespace IdealGas_Simulator.Models
     public class PixelParticle
     {
         public int Seed { get; set; }
-        public int Entropy { get; set; } // ??? for random invoker, 아마 정확히 하려면 에너지가 아닐까?
+        public int Energy { get; set; } // for random invoker, 역할만 비슷함. (온도 대신이라고 봐도 되고)
 
         public Color Color { get; set; }
         public int Radius { get; set; }
