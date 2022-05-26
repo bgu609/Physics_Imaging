@@ -18,7 +18,7 @@ namespace IdealGas_Simulator.ViewModels
             int Last_Y = 750;
 
             int Entropy = 10;
-            int Particles_Number = 4400;
+            int Particles_Number = 20000;
 
             PixelParticle[] Initial_Particles = new PixelParticle[Particles_Number];
             for (int i = 0; i < Initial_Particles.Length; i++)
@@ -45,7 +45,7 @@ namespace IdealGas_Simulator.ViewModels
 
             while (true)
             {
-                Thread.Sleep(16);
+                Thread.Sleep(10);
 
                 Control_Multi_Particles();
             }
@@ -53,6 +53,8 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Initialize_Particles(params PixelParticle[] particle)
         {
+            if (Pixel_Particles == null) Pixel_Particles = new List<PixelParticle>();
+
             Pixel_Particles.Clear();
 
             List<PixelParticle> Emitter = new List<PixelParticle>();
@@ -76,8 +78,6 @@ namespace IdealGas_Simulator.ViewModels
             }
 
             await Task.WhenAll(Task_List);
-
-            Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
         }
     }
 }
