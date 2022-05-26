@@ -27,22 +27,24 @@ namespace IdealGas_Simulator.ViewModels
 
         public void Clear_Particles()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                 WriteableBitmapExtensions.Clear(BitMap);
             }));
         }
 
-        public async void Now_Rendering_Particles(List<PixelParticle> Particle_List)
+        public void Now_Rendering_Particles(List<PixelParticle> Particle_List)
         {
             Application.Current.Dispatcher.Invoke(() => {
-                BitMap.Lock();
+                //BitMap.Lock();
             });
             
-            Clear_Particles();
-            await Async_Rendering(Particle_List);
+            //Clear_Particles();
+            //await Async_Rendering(Particle_List);
+            //Task.Run(() => Sync_Rendering(Particle_List));
+            Sync_Rendering(Particle_List);
 
             Application.Current.Dispatcher.Invoke(() => {
-                BitMap.Unlock();
+                //BitMap.Unlock();
             });
         }
 
@@ -52,22 +54,22 @@ namespace IdealGas_Simulator.ViewModels
             List<Task> Task_List = new List<Task>() // Boundary 그리기
             {
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 100, 1600, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 100, 1600, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 1400, 800, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
                 Task.Run(() => {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
                         WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 1400, 800, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
                     }));
                 }),
@@ -84,6 +86,39 @@ namespace IdealGas_Simulator.ViewModels
             }
 
             await Task.WhenAll(Task_List);
+        }
+
+        private void Sync_Rendering(List<PixelParticle> Particle_List)
+        {
+            List<PixelParticle> Collector = Particle_List.ToList();
+
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                WriteableBitmapExtensions.Clear(BitMap);
+                WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 100, 1600, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 100, 1600, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 1400, 800, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+                WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 1400, 800, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+            }));
+
+            //Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+            //    WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 100, 1600, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+            //}));
+
+            //Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+            //    WriteableBitmapExtensions.DrawLineAa(BitMap, 1600, 1400, 800, 1400, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+            //}));
+
+            //Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+            //    WriteableBitmapExtensions.DrawLineAa(BitMap, 800, 1400, 800, 100, Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 20);
+            //}));
+
+            foreach (PixelParticle item in Collector) // Particles 그리기
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    WriteableBitmapExtensions.FillEllipse(BitMap, item.X, item.Y, item.X + item.Radius * 2, item.Y + item.Radius * 2, item.Color);
+                }));
+            }
         }
     }
 }

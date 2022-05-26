@@ -15,12 +15,13 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Simulation_Loop()
         {
-            Random Random = new Random();
+            //Random Random = new Random();
 
             int Last_X = 1200;
             int Last_Y = 750;
 
             int Entropy = 10;
+            int Particles_Number = 500;
 
             //Control_One_Particle(Last_X, Last_Y);
 
@@ -37,25 +38,33 @@ namespace IdealGas_Simulator.ViewModels
             //        Quantum_Handler = new Random(4), Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Entropy = Entropy, Dimension = 2, Radius = 5, X = Last_X + 20, Y = Last_Y, X_Boundary_Min = 810, X_Boundary_Max = 1590, Y_Boundary_Min = 110, Y_Boundary_Max = 1390 }
             //);
 
-            PixelParticle[] Initial_Particles = new PixelParticle[100];
-            for (int i = 0; i < 100; i++)
+            PixelParticle[] Initial_Particles = new PixelParticle[Particles_Number];
+            for (int i = 0; i < Initial_Particles.Length; i++)
             {
                 Initial_Particles[i] = new PixelParticle() {
-                    Quantum_Handler = new Random(i),
+                    //Quantum_Handler = new Random(i),
                     Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF),
+                    Seed = i,
                     Entropy = Entropy,
                     Dimension = 2,
                     Radius = 5,
                     X = Last_X,
                     Y = Last_Y,
-                    X_Boundary_Min = 810,
-                    X_Boundary_Max = 1590,
-                    Y_Boundary_Min = 110,
-                    Y_Boundary_Max = 1390,
+                    //X_Boundary_Min = 810,
+                    //X_Boundary_Max = 1590,
+                    //Y_Boundary_Min = 110,
+                    //Y_Boundary_Max = 1390,
                 };
             }
 
-            Initialize_Particles(Initial_Particles);
+            X_Boundary_Min = 810;
+            X_Boundary_Max = 1590;
+            Y_Boundary_Min = 110;
+            Y_Boundary_Max = 1390;
+            Z_Boundary_Min = 0;
+            Z_Boundary_Max = 0;
+
+            Task.Run(() => Initialize_Particles(Initial_Particles));
 
             while (true)
             {
@@ -115,25 +124,41 @@ namespace IdealGas_Simulator.ViewModels
             Pixel_Particles = Emitter;
         }
 
-        private void Control_One_Particle(int x, int y)
-        {
-            Task.Run(() => {
-                Initialize_Particles(
-                    new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = x, Y = y, }
-                );
+        //private void Control_One_Particle(int x, int y)
+        //{
+        //    Task.Run(() => {
+        //        Initialize_Particles(
+        //            new PixelParticle() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Radius = 5, X = x, Y = y, }
+        //        );
 
-                Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
-            });
-        }
+        //        Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
+        //    });
+        //}
+
+        //private async void Control_Multi_Particles()
+        //{
+        //    List<Task> Task_List = new List<Task>();
+
+        //    foreach (PixelParticle item in Pixel_Particles) // 이건 비동기로 실행시키니 확률적인 게 안 되는 거 같은데
+        //    {
+        //        Task_List.Add(Task.Run(() => {
+        //            item.Invoke_Probability_Position();
+        //        }));
+        //    }
+
+        //    await Task.WhenAll(Task_List);
+
+        //    Drawing_Space_Object.Now_Rendering_Particles(Pixel_Particles);
+        //}
 
         private async void Control_Multi_Particles()
         {
             List<Task> Task_List = new List<Task>();
 
-            foreach (PixelParticle item in Pixel_Particles) // 이건 비동기로 실행시키니 확률적인 게 안 되는 거 같은데
+            foreach (PixelParticle item in Pixel_Particles)
             {
                 Task_List.Add(Task.Run(() => {
-                    item.Invoke_Probability_Position();
+                    Invoke_Probability_Position(item);
                 }));
             }
 
