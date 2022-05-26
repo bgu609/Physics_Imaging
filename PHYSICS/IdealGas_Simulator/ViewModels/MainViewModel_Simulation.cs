@@ -21,7 +21,7 @@ namespace IdealGas_Simulator.ViewModels
             int Last_Y = 750;
 
             int Entropy = 10;
-            int Particles_Number = 500;
+            int Particles_Number = 1000;
 
             //Control_One_Particle(Last_X, Last_Y);
 
