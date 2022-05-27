@@ -23,6 +23,8 @@ namespace IdealGas_Simulator.ViewModels
         {
             Initialize_UI();
 
+            Initialize_Condition();
+
             Initialize();
         }
 
@@ -30,8 +32,7 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Initialize()
         {
-            Number_of_Particles = 30000;
-            Pixel_Particles_Energy = 20;
+            
 
 
 
@@ -49,6 +50,19 @@ namespace IdealGas_Simulator.ViewModels
         private void Initialize_UI()
         {
             Drawing_Space_Object = new DrawingSpace(2400, 1500);
+        }
+
+        private void Initialize_Condition()
+        {
+            Number_of_Particles = 5000;
+            Pixel_Particles_Energy = 20;
+
+            X_Boundary_Min = 805;
+            X_Boundary_Max = 1585;
+            Y_Boundary_Min = 105;
+            Y_Boundary_Max = 1385;
+            Z_Boundary_Min = 0;
+            Z_Boundary_Max = 0;
         }
 
         private void Drawing_Timer_Tick(object sender, EventArgs e)

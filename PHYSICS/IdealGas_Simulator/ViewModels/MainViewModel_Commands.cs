@@ -46,22 +46,26 @@ namespace IdealGas_Simulator.ViewModels
                 Particle.X += (int)Math.Round(Move_Radial * Math.Sin(Move_Azimuth));
                 Particle.Y += (int)Math.Round(Move_Radial * Math.Cos(Move_Azimuth));
 
-                if (Particle.X < X_Boundary_Min)
+                // Boundary 반사 효과
+                while ((Particle.X < X_Boundary_Min) || (Particle.X > X_Boundary_Max) || (Particle.Y < Y_Boundary_Min) || (Particle.Y > Y_Boundary_Max))
                 {
-                    Particle.X = X_Boundary_Min;
-                }
-                else if (Particle.X > X_Boundary_Max)
-                {
-                    Particle.X = X_Boundary_Max;
-                }
+                    if (Particle.X < X_Boundary_Min)
+                    {
+                        Particle.X = X_Boundary_Min + (X_Boundary_Min - Particle.X);
+                    }
+                    else if (Particle.X > X_Boundary_Max)
+                    {
+                        Particle.X = X_Boundary_Max - (Particle.X - X_Boundary_Max);
+                    }
 
-                if (Particle.Y < Y_Boundary_Min)
-                {
-                    Particle.Y = Y_Boundary_Min;
-                }
-                else if (Particle.Y > Y_Boundary_Max)
-                {
-                    Particle.Y = Y_Boundary_Max;
+                    if (Particle.Y < Y_Boundary_Min)
+                    {
+                        Particle.Y = Y_Boundary_Min + (Y_Boundary_Min - Particle.Y);
+                    }
+                    else if (Particle.Y > Y_Boundary_Max)
+                    {
+                        Particle.Y = Y_Boundary_Max - (Particle.Y - Y_Boundary_Max);
+                    }
                 }
             }
             else if (Particle.Dimension == 3)

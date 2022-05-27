@@ -14,13 +14,6 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Simulation_Loop()
         {
-            X_Boundary_Min = 805;
-            X_Boundary_Max = 1585;
-            Y_Boundary_Min = 105;
-            Y_Boundary_Max = 1385;
-            Z_Boundary_Min = -5;
-            Z_Boundary_Max = -5;
-
             Task.Run(() => Initialize_Particles(Number_of_Particles, Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Pixel_Particles_Energy, 2, 5, 1200, 750));
 
             while (true)

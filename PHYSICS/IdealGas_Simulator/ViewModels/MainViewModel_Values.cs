@@ -38,42 +38,42 @@ namespace IdealGas_Simulator.ViewModels
             set { pixel_particles_energy = value; }
         }
 
-        private int x_boundary_min;
+        private int x_boundary_min = 805;
         public int X_Boundary_Min
         {
             get => x_boundary_min;
             set { x_boundary_min = value; OnChanged(); }
         }
 
-        private int x_boundary_max;
+        private int x_boundary_max = 1585;
         public int X_Boundary_Max
         {
             get => x_boundary_max;
             set { x_boundary_max = value; OnChanged(); }
         }
 
-        private int y_boundary_min;
+        private int y_boundary_min = 105;
         public int Y_Boundary_Min
         {
             get => y_boundary_min;
             set { y_boundary_min = value; OnChanged(); }
         }
 
-        private int y_boundary_max;
+        private int y_boundary_max = 1385;
         public int Y_Boundary_Max
         {
             get => y_boundary_max;
             set { y_boundary_max = value; OnChanged(); }
         }
 
-        private int z_boundary_min;
+        private int z_boundary_min = 0;
         public int Z_Boundary_Min
         {
             get => z_boundary_min;
             set { z_boundary_min = value; OnChanged(); }
         }
 
-        private int z_boundary_max;
+        private int z_boundary_max = 0;
         public int Z_Boundary_Max
         {
             get => z_boundary_max;
