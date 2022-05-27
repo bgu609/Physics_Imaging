@@ -127,5 +127,11 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenGL CLR\OpenGL CLR.vcxproj">
+      <Project>{5e13a7ee-67a4-4200-b450-46cab65ee517}</Project>
+      <Name>OpenGL CLR</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
