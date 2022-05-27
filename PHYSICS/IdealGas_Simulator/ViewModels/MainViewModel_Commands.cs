@@ -29,7 +29,7 @@ namespace IdealGas_Simulator.ViewModels
             }
             else if (Particle.Dimension == 2)
             {
-                Quantum_Handler = new Random((int)DateTime.Now.Ticks + Particle.Seed);
+                Random Quantum_Handler = new Random((int)DateTime.Now.Ticks + Particle.Seed);
 
                 double Move_Radial = Quantum_Handler.Next(-Particle.Energy, Particle.Energy + 1);
                 double Move_Radial_Decimal = Quantum_Handler.NextDouble();

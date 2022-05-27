@@ -1,18 +1,10 @@
 ﻿using IdealGas_Simulator.Models;
-using System;
 using System.Collections.Generic;
 
 namespace IdealGas_Simulator.ViewModels
 {
     public partial class MainViewModel
     {
-        private Random quantum_handler;
-        public Random Quantum_Handler
-        {
-            get => quantum_handler;
-            set { quantum_handler = value; }
-        }
-
         private List<PixelParticle> pixel_particles;
         public List<PixelParticle> Pixel_Particles
         {
