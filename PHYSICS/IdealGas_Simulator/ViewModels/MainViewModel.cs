@@ -30,8 +30,8 @@ namespace IdealGas_Simulator.ViewModels
 
         private void Initialize()
         {
-            Number_of_Particles = 10000;
-            Pixel_Particles_Energy = 10;
+            Number_of_Particles = 30000;
+            Pixel_Particles_Energy = 20;
 
 
 

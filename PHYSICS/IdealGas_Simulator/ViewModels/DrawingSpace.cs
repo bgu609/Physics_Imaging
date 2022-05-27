@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace IdealGas_Simulator.ViewModels
 {
@@ -26,7 +25,7 @@ namespace IdealGas_Simulator.ViewModels
 
         public void Clear_Particles()
         {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 WriteableBitmapExtensions.Clear(BitMap);
             }));
         }
