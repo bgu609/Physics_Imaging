@@ -10,5 +10,6 @@
         <ContentControl>
             <ContentPresenter Content="{Binding Drawing_Space_Object}"/>
         </ContentControl>
+        <Border Background="#336594FF" Margin="30, 430, 30, 30"/>
     </Grid>
 </UserControl>
